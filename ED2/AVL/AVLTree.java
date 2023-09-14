@@ -60,61 +60,33 @@ public class AVLTree<T extends Comparable<T>> {
     }
 
     private void rotateLeft(AVLNode<T> previous, AVLNode<T> a, AVLNode<T> b) {
-        if (previous == null && b.getFatBal() > 0) {
-
-            this.root = b;
-            a.setRight(b.getLeft());
-            b.setLeft(a);
-            a.setFatBal(0);
-            b.setFatBal(0);
-            System.out.println("RSE null");
-
-        } else if (previous != null && b.getFatBal() > 0) {
-            if(previous.getLeft() == a) previous.setLeft(b); // essencial!!!
-            else previous.setRight(b);
-            a.setRight(b.getLeft());
-            b.setLeft(a);
-            a.setFatBal(0);
-            b.setFatBal(0);
-            System.out.println("RSE");
-
-        } else if (previous == null && b.getFatBal() < 0) {
-            AVLNode<T> c = b.getLeft();
-            this.root = c;
-            b.setLeft(c.getRight());
-            c.setRight(b);
-            a.setRight(c.getLeft());
-            c.setLeft(a);
-            System.out.println("RDE");
-
-            switch (c.getFatBal()) {
-                case 0:
-                    a.setFatBal(0);
-                    b.setFatBal(0);
-                    c.setFatBal(0);
-                    break;
-                case 1:
-                    a.setFatBal(-1);
-                    b.setFatBal(0);
-                    c.setFatBal(0);
-                    break;
-                case -1:
-                    a.setFatBal(0);
-                    b.setFatBal(1);
-                    c.setFatBal(0);
-                    break;
-                default:
-                    break;
+        if (b.getFatBal() > 0) {
+            if (previous == null) {
+                this.root = b;
+            } else {
+                if (previous.getLeft() == a)
+                    previous.setLeft(b); // essencial!!!
+                else
+                    previous.setRight(b);
             }
-        } else if (previous != null && b.getFatBal() < 0) {
+            a.setRight(b.getLeft());
+            b.setLeft(a);
+            a.setFatBal(0);
+            b.setFatBal(0);
+        } else if (b.getFatBal() < 0) {
             AVLNode<T> c = b.getLeft();
-            if(previous.getLeft() == a) previous.setLeft(c); // essencial!!!
-            else previous.setRight(c);
+            if (previous == null)
+                this.root = c;
+            else {
+                if (previous.getLeft() == a)
+                    previous.setLeft(c); // essencial!!!
+                else
+                    previous.setRight(c);
+            }
             b.setLeft(c.getRight());
             c.setRight(b);
             a.setRight(c.getLeft());
             c.setLeft(a);
-            System.out.println("RDE");
 
             switch (c.getFatBal()) {
                 case 0:
@@ -139,59 +111,33 @@ public class AVLTree<T extends Comparable<T>> {
     }
 
     private void rotateRight(AVLNode<T> previous, AVLNode<T> a, AVLNode<T> b) {
-        if (previous == null && b.getFatBal() < 0) {
-            this.root = b;
-            a.setLeft(b.getRight());
-            b.setRight(a);
-            a.setFatBal(0);
-            b.setFatBal(0);
-
-            System.out.println("RSD null");
-        } else if (previous != null && b.getFatBal() < 0) {
-            if(previous.getLeft() == a) previous.setLeft(b); // essencial!!!
-            else previous.setRight(b);
-            a.setLeft(b.getRight());
-            b.setRight(a);
-            a.setFatBal(0);
-            b.setFatBal(0);
-
-            System.out.println("RSD");
-        } else if (previous == null && b.getFatBal() > 0) {
-            AVLNode<T> c = b.getRight();
-            this.root = c;
-            b.setRight(c.getLeft());
-            c.setLeft(b);
-            a.setLeft(c.getRight());
-            c.setRight(a);
-            System.out.println("RDD");
-            switch (c.getFatBal()) {
-                case 0:
-                    a.setFatBal(0);
-                    b.setFatBal(0);
-                    c.setFatBal(0);
-                    break;
-                case 1:
-                    a.setFatBal(0);
-                    b.setFatBal(-1);
-                    c.setFatBal(0);
-                    break;
-                case -1:
-                    a.setFatBal(1);
-                    b.setFatBal(0);
-                    c.setFatBal(0);
-                    break;
-                default:
-                    break;
+        if (b.getFatBal() < 0) {
+            if (previous == null) {
+                this.root = b;
+            } else {
+                if (previous.getLeft() == a)
+                    previous.setLeft(b);
+                else
+                    previous.setRight(b);
             }
-        } else if (previous != null && b.getFatBal() > 0) {
+            a.setLeft(b.getRight());
+            b.setRight(a);
+            a.setFatBal(0);
+            b.setFatBal(0);
+        } else if (b.getFatBal() > 0) {
             AVLNode<T> c = b.getRight();
-            if(previous.getLeft() == a) previous.setLeft(c); // essencial!!!
-            else previous.setRight(c);
+            if (previous == null)
+                this.root = c;
+            else {
+                if (previous.getLeft() == a)
+                    previous.setLeft(c);
+                else
+                    previous.setRight(c);
+            }
             b.setRight(c.getLeft());
             c.setLeft(b);
             a.setLeft(c.getRight());
             c.setRight(a);
-            System.out.println("RDD");
             switch (c.getFatBal()) {
                 case 0:
                     a.setFatBal(0);
@@ -234,8 +180,8 @@ public class AVLTree<T extends Comparable<T>> {
             inOrder(node.getRight());
     }
 
-    public void postOrder(){
-    if (this.root == null)
+    public void postOrder() {
+        if (this.root == null)
             System.out.println("Árvore vazia");
         else {
             if (this.root.getLeft() != null)
