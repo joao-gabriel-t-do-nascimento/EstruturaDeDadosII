@@ -252,6 +252,7 @@ public class AVLTree<T extends Comparable<T>> {
                 actual.setFatBal(altura(actual.getRight()) - altura(actual.getLeft()));
                 if (actual.getFatBal() < -1) {
                     rotateRight(previous, actual, actual.getLeft());
+                    
                 } else if (actual.getFatBal() > 1) {
                     rotateLeft(previous, actual, actual.getRight());
                 }
